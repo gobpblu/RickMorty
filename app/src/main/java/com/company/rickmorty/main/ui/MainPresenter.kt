@@ -7,6 +7,7 @@ import com.company.rickmorty.main.models.location.LocationData
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import timber.log.Timber
 
 class MainPresenter(private val api: RickAndMortyApi) {
 
@@ -29,7 +30,7 @@ class MainPresenter(private val api: RickAndMortyApi) {
                 ) {
                     if (response.isSuccessful && response.body() != null) {
                         val characters = response.body()
-                        mainContract?.showCharacterData(characters!!)
+                        mainContract?.showCharacters(characters!!)
                     }
                 }
 
@@ -39,12 +40,12 @@ class MainPresenter(private val api: RickAndMortyApi) {
             })
     }
 
-    fun getLocationDataFromApi() {
+    /*fun getLocationDataFromApi() {
         api.getAllLocations().enqueue(object : Callback<LocationData> {
             override fun onResponse(call: Call<LocationData>, response: Response<LocationData>) {
                 if (response.isSuccessful && response.body() != null) {
                     val locations = response.body()
-                    mainContract?.showLocationData(locations!!)
+                    mainContract?.showLocations(locations!!)
                 }
             }
 
@@ -53,14 +54,15 @@ class MainPresenter(private val api: RickAndMortyApi) {
             }
 
         })
-    }
+    }*/
 
-    fun getEpisodeDataFromApi() {
+    /*fun getEpisodeDataFromApi() {
         api.getAllEpisodes().enqueue(object : Callback<EpisodeData> {
             override fun onResponse(call: Call<EpisodeData>, response: Response<EpisodeData>) {
                 if (response.isSuccessful && response.body() != null) {
                     val episodes = response.body()
-                    mainContract?.showEpisodeData(episodes!!)
+
+                    mainContract?.showEpisodes(episodes!!)
                 }
             }
 
@@ -69,6 +71,6 @@ class MainPresenter(private val api: RickAndMortyApi) {
             }
 
         })
-    }
+    }*/
 
 }
