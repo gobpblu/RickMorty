@@ -8,11 +8,13 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.company.rickmorty.R
-import com.company.rickmorty.main.models.character.Result
+import com.company.rickmorty.main.models.character.ResultResponse
 
-class MainAdapter() : RecyclerView.Adapter<MainAdapter.MainViewHolder>() {
+class MainAdapter(
+    val onClick: (ResultResponse) -> Unit
+) : RecyclerView.Adapter<MainAdapter.MainViewHolder>() {
 
-    private val characters = mutableListOf<Result>()
+    private val characters = mutableListOf<ResultResponse>()
 
 
     inner class MainViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -20,11 +22,12 @@ class MainAdapter() : RecyclerView.Adapter<MainAdapter.MainViewHolder>() {
         private val textView1: TextView = itemView.findViewById(R.id.text_view1)
         private val textView2: TextView = itemView.findViewById(R.id.text_view2)
 
+        fun bind(resultResponse: ResultResponse) {
+            Glide.with(itemView.context).load(resultResponse.image).into(imageView)
+            textView1.text = resultResponse.name
+            textView2.text = resultResponse.id.toString()
 
-        fun bind(result: Result) {
-            Glide.with(itemView.context).load(result.image).into(imageView)
-            textView1.text = result.name
-            textView2.text = result.id.toString()
+            itemView.setOnClickListener { onClick.invoke(resultResponse) }
         }
     }
 
@@ -40,7 +43,7 @@ class MainAdapter() : RecyclerView.Adapter<MainAdapter.MainViewHolder>() {
 
     override fun getItemCount() = characters.size
 
-    fun setData(list: List<Result>) {
+    fun setData(list: List<ResultResponse>) {
         characters.clear()
         characters.addAll(list)
 
